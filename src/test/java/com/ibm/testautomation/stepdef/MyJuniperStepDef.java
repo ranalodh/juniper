@@ -30,8 +30,7 @@ public class MyJuniperStepDef extends ExtentReportListener {
 	SoftAssert softAssert = new SoftAssert();
 	CommonUtil commonUtil = new CommonUtil();
 	LoginPage loginPage = new LoginPage();
-	MyJuniperPage myJuniperPage = new MyJuniperPage();
-
+	
 	/**
 	 * 
 	 * @param scenario
@@ -74,50 +73,4 @@ public class MyJuniperStepDef extends ExtentReportListener {
 			Assert.fail();
 		}
 	}
-
-	@When("^Is Login success$")
-	public void login_application_is_success() throws Throwable {
-		Properties properties = obj.getProperty();
-
-		try {
-			logInfo = test.createNode(new GherkinKeyword("When"), "Is Login success?");		
-			Assert.assertEquals(loginPage.login(driver), false, "Invalid username and password!");
-			String expectedMyJuniperPageTitle = properties.getProperty("myjuniperpage.title");
-			String actualMyJuniperPageTitle = loginPage.getTitle(driver);
-			Assert.assertEquals(actualMyJuniperPageTitle, expectedMyJuniperPageTitle, "Login is not success!");
-
-			logInfo.pass("Login is success");
-			logInfo.addScreenCaptureFromPath(captureScreenShot(driver));
-
-		} catch (AssertionError | Exception e) {
-			testStepHandle("FAIL", driver, logInfo, e.getLocalizedMessage());
-			Assert.fail();
-		}
-	}
-
-	@Then("^Enter Customer Email$")
-	public void enter_customer_email() throws Throwable {
-		Properties properties = obj.getProperty();
-
-		try {
-			logInfo = test.createNode(new GherkinKeyword("Then"), "Enter Customer Email");
-			myJuniperPage.externalLogin(driver);
-		} catch (AssertionError | Exception e) {
-			testStepHandle("FAIL", driver, logInfo, e.getLocalizedMessage());
-			Assert.fail();
-		}
-	}
-
-	@Then("^Verify Application Data$")
-	public void verify_application_data() throws IOException {
-		Properties properties = obj.getProperty();
-
-		try {
-			logInfo = test.createNode(new GherkinKeyword("Then"), "Verify Application Data");
-		} catch (AssertionError | Exception e) {
-			testStepHandle("FAIL", driver, logInfo, e.getLocalizedMessage());
-			Assert.fail();
-		}
-	}
-
 }
